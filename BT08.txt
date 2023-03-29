@@ -1,0 +1,113 @@
+1. 
+0xc3059ffb5c
+0xc3059ffb5c
+because x and y are temporary varibles, it may have the same id location.
+2.
+a.
+	0xc5141ff764 : a
+	0xc5141ff765 : b
+	0xc5141ff766 : c
+b.
+#include <iostream>
+
+using namespace std;
+
+
+int main()
+{
+   int a[4] = {1, 2, 3, 4}; 
+   for (int i = 0; i < 4; i++) {
+      cout << (void*) (a + i) << " : " << (*(a+i)) << endl;
+   } 
+   return 0;
+}
+
+Output: 
+0x77c61ffbf0 : 1
+0x77c61ffbf4 : 2
+0x77c61ffbf8 : 3
+0x77c61ffbfc : 4
+
+=> size of type "int" location is 4
+
+c.
+
+#include <iostream>
+
+using namespace std;
+
+
+int main()
+{
+   double a[4] = {1, 2, 3, 4}; 
+   for (int i = 0; i < 4; i++) {
+      cout << (void*) (a + i) << " : " << (*(a+i)) << endl;
+   } 
+   return 0;
+}
+
+0xa9039ff9a0 : 1
+0xa9039ff9a8 : 2
+0xa9039ff9b0 : 3
+0xa9039ff9b8 : 4
+
+=> size of type "double" location is 8
+
+d.
+
+#include <iostream>
+
+using namespace std;
+
+
+int main()
+{
+   double a[4] = {1, 2, 3, 4}; 
+   for (double* i = a; i <= a + 3; i+=2) {
+      cout << (void*) (i) << " : " << (*(i)) << endl;
+   } 
+   return 0;
+}
+
+=> this will make pointer move to the next of next location
+
+3.
+
+#include <bits/stdc++.h>
+#include<stdlib.h>
+
+using namespace std;
+
+// có 2 cách làm
+
+// void swap_pointers(char** x, char** y)
+// {
+//    char* temp = *x;
+//    *x = *y;
+//    *y = temp;
+// }
+
+void swap_pointers(char* &x, char* &y)
+{
+   char* temp = x;
+   x = y;
+   y = temp;
+}
+
+
+
+int main()
+{
+   char a[] = "U should print second";
+   char b[] = "I should print first";
+
+   char *s1 = a;
+   char *s2 = b;
+   swap_pointers(s1,s2);
+   cout << "s1 is " << s1 << endl;
+   cout << "s2 is " << s2 << endl;
+   return 0;
+}
+
+
+
